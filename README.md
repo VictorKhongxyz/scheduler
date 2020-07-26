@@ -3,8 +3,6 @@ A react scheduler for scheduling staffs
 ### Sandbox
 https://uhg4t.csb.app/
 
-
-## Quick Start
 ## Quick Start
 
 ```bash
