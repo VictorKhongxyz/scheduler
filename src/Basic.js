@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 //import moment from 'moment'
 //import 'moment/locale/zh-cn';
+import moment from 'moment'
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from 'react-big-scheduler'
 import withDragDropContext from './withDnDContext'
 import 'react-big-scheduler/lib/css/style.css'
@@ -12,28 +13,47 @@ class Basic extends Component{
         
           {
              id: 'r1',
-             name: 'StaffA'
+             name: 'Staff_Val'
           },
           {
              id: 'r2',
-             name: 'StaffC',
+             name: 'Staff_Tom',
+          
+          },
+          {
+             id: 'r5',
+             name: 'Staff_Ben',
+          
+          },
+          {
+             id: 'r6',
+             name: 'Staff_Lee',
           
           },
           {
              id: 'r3',
-             name: 'ManagerB',
+             name: 'Manager_A',
         
           },
           {
              id: 'r4',
-             name: 'ManagerA',
+             name: 'Manager_B',
+            
+          },
+          {
+             id: 'r7',
+             name: 'Manager_C',
+            
+          },
+          {
+             id: 'r8',
+             name: 'Manager_D',
             
           },
       ];
-        //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
-        let schedulerData = new SchedulerData(new Date(), ViewTypes.Week, false, false,{eventItemPopoverEnabled: false,
+        //let schedulerData = new SchedulerData(, ViewTypes.Week);
+        let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week, false, false,{  displayWeekend: false, eventItemPopoverEnabled: false,
             views: [
-                {viewName: 'Daily Scheduling', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
                 {viewName: 'Weekly Scheduling', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
           
             ], // minuteStep: 15
@@ -41,8 +61,52 @@ class Basic extends Component{
         // schedulerData.localeMoment.locale('en');
        
         schedulerData.setResources(resources);
-        // schedulerData.setEvents(DemoData.events);
-    
+		//schedulerData.setEvents(DemoData.events);
+    	let events = [
+                {
+                     id: 1,
+                     start: '2017-12-18 09:30:00',
+                     end: '2017-12-19 23:30:00',
+                     resourceId: 'r1',
+                     title: 'A1',
+                     bgColor: '#488FAB'
+                 },
+                 {
+                     id: 2,
+                     start: '2017-12-18 12:30:00',
+                     end: '2017-12-26 23:30:00',
+                     resourceId: 'r2',
+                     title: 'A2',
+                     resizable: true
+                 },
+                 {
+                     id: 3,
+                     start: '2017-12-19 12:30:00',
+                     end: '2017-12-20 23:30:00',
+                     resourceId: 'r3',
+                     title: 'Fixed',
+                     movable: true
+                 },
+                 {
+                     id: 4,
+                     start: '2017-12-19 14:30:00',
+                     end: '2017-12-20 23:30:00',
+                     resourceId: 'r1',
+                     title: 'Training',
+                     startResizable: true,
+                     bgColor: '#9C48AB'
+                 },
+                 {
+                     id: 5,
+                     start: '2017-12-19 15:30:00',
+                     end: '2017-12-20 23:30:00',
+                     resourceId: 'r2',
+                     title: 'R2',
+                     rrule: 'FREQ=WEEKLY;DTSTART=20171219T013000Z;BYDAY=TU,FR',
+                     bgColor: '#DCC36B'
+                 }
+             ];
+schedulerData.setEvents(events);
 
         this.state = {
             viewModel: schedulerData
@@ -93,7 +157,7 @@ class Basic extends Component{
 
     onViewChange = (schedulerData, view) => {
         schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
-        schedulerData.setEvents(DemoData.events);
+		//schedulerData.setEvents(DemoData.events);
         this.setState({
             viewModel: schedulerData
         })
@@ -101,7 +165,7 @@ class Basic extends Component{
 
     onSelectDate = (schedulerData, date) => {
         schedulerData.setDate(date);
-        schedulerData.setEvents(DemoData.events);
+        //schedulerData.setEvents(DemoData.events);
         this.setState({
             viewModel: schedulerData
         })
@@ -128,11 +192,11 @@ class Basic extends Component{
 
         let newEvent = {
             id: newFreshId,
-            title: 'New event you just created',
+            title: '',
             start: start,
             end: end,
             resourceId: slotId,
-            bgColor: 'purple'
+            bgColor: '#488FAB'
         }
         schedulerData.addEvent(newEvent);
         this.setState({
